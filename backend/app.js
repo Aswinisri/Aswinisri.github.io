@@ -16,17 +16,16 @@ app.post('/send-email', (req, res) => {
 
   // Create reusable transporter object using the default SMTP transport
   var transporter = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
+    service: 'gmail',
     auth: {
-      user: "ff493e6588bdf1",
-      pass: "7c78f3fe61fcb4"
+      user: 'ashusrini07@gmail.com', // Your Gmail email address
+      pass: 'dfwk mpjt zttq stxb' // Your application-specific password
     }
   });
 
   // Setup email data
   let mailOptions = {
-    from: 'ashu@gmail.com',
+    from: 'ashusrini07@gmail.com',
     to: 'ashusrini07@gmail.com', // your recipient email
     subject: subject,
     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
@@ -35,8 +34,10 @@ app.post('/send-email', (req, res) => {
   // Send email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
+      console.error('Error sending email:', error); // Log the error to the console
       return res.status(500).send({ success: false, message: 'Error sending email' });
     }
+    console.log('Email sent:', info.response); // Log the response info to the console
     return res.status(200).send({ success: true, message: 'Email sent successfully' });
   });
 });
